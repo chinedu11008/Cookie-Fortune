@@ -1,0 +1,27 @@
+{
+  "name": "cookie-fortune",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Crack a cookie, leave your fortune on-chain, forever. A social cApp built on Cookie Chain (SVM).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.28",
+    "@solana/wallet-adapter-nightly": "^0.1.21",
+    "@solana/wallet-adapter-react": "^0.15.40",
+    "@solana/wallet-adapter-react-ui": "^0.9.40",
+    "@solana/wallet-adapter-wallets": "^0.19.39",
+    "@solana/web3.js": "^1.99.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^5.4.21",
+    "vite-plugin-node-polyfills": "^0.28.0"
+  }
+}

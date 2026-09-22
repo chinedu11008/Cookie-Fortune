@@ -1,0 +1,21 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# env files (never commit secrets/overrides — this app doesn't need any
+# secret keys, but keep local overrides out of git anyway)
+.env
+.env.*
+!.env.example
+
+# editor/OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

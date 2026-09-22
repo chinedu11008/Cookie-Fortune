@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* CookieFortune palette — a bakery ticket, not a SaaS dashboard */
+  --dough: #f2e4c8;
+  --dough-deep: #e8d4a8;
+  --crust: #8b5e34;
+  --ink: #3a2415;
+  --stamp: #c0392b;
+  --stamp-dark: #9c2e20;
+  --choc: #2b1810;
+  --paper: #fffbf2;
+  --paper-shadow: rgba(58, 36, 21, 0.16);
+  --success: #4b7f52;
+  --error: #a6402f;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', ui-serif, serif;
+  --font-body: 'Space Grotesk', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-slip: 3px;
+  --radius-control: 8px;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--dough);
+  background-image: radial-gradient(circle at 1px 1px, rgba(139, 94, 52, 0.13) 1px, transparent 0);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
