@@ -147,16 +147,6 @@ insert (seeded deterministically from that post's transaction signature).
   Asset Standard — great for showing a wallet's Cookie Chain NFTs), or swap/liquidity features through
   [Cookiebox](https://cookiebox.app/) or [Cookieswap](https://cookieswap.fun/).
 
-## Submission checklist
-
-- [ ] Deploy `dist/` (Vercel/Netlify/etc.) and note the live URL
-- [ ] Push this repo to GitHub (public, MIT/your license of choice)
-- [ ] This app uses only genesis-embedded Cookie Chain programs (Memo: `MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr`,
-      System Program) — no separate program address to report
-- [ ] Post the X (Twitter) thread: what it does, how to use it, and a pointer to the
-      [Cookie Chain bridge](https://hyperlane.cookiescan.io) for getting COOK
-- [ ] Share the thread in the [Cookie Chain Telegram](https://t.me/TheCookieNetChain)
-
 ---
 
 Built on [Cookie Chain](https://www.cookiechain.wtf) · [Docs](https://docs.cookiechain.wtf) ·
