@@ -158,6 +158,22 @@
   margin-bottom: 10px;
 }
 
+.composer__funding-warning {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: rgba(166, 64, 47, 0.09);
+  border: 1px dashed var(--error);
+  border-radius: 6px;
+  color: var(--error);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.composer__funding-warning a {
+  color: var(--error);
+  font-weight: 600;
+}
+
 .composer__reply-clear {
   background: none;
   border: none;

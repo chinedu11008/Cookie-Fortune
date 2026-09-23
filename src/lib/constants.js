@@ -13,6 +13,11 @@ export const EXPLORER_TX_URL =
   import.meta.env.VITE_EXPLORER_TX_URL || 'https://cookiescan.io/tx/'
 export const EXPLORER_ADDRESS_URL = 'https://cookiescan.io/address/'
 
+// Where to get COOK for network fees, and where to ask for help getting
+// some if you have none — surfaced in the low-balance warning banner.
+export const BRIDGE_URL = 'https://hyperlane.cookiescan.io'
+export const TELEGRAM_URL = 'https://t.me/TheCookieNetChain'
+
 // --- Genesis-embedded programs --------------------------------------------
 // Cookie Chain ships the standard Solana native/SPL programs at genesis,
 // at their canonical Solana addresses, so no custom program deploy is

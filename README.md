@@ -68,8 +68,16 @@ npm run dev
 ```
 
 Open the printed local URL, install [Nightly](https://nightly.app/) (or any Solana Wallet
-Standard wallet) if you haven't, connect, and make sure the wallet holds a little COOK to cover network
-fees. Bridge COOK from Solana at [hyperlane.cookiescan.io](https://hyperlane.cookiescan.io) if needed.
+Standard wallet) if you haven't, and connect.
+
+**Fund the wallet before posting.** Cookie Chain isn't a free-faucet testnet — COOK is a real,
+low-cost SPL token on Solana mainnet (bridged 1:1) that doubles as Cookie Chain's native gas token. A
+wallet that has never held any COOK on Cookie Chain has no account entry in the chain's ledger yet, so
+even the tiny network fee (~0.000005 COOK) can't be paid, and the app shows a "bridge some COOK" banner
+until it detects a balance. Two ways to get some:
+- Bridge existing COOK from Solana mainnet at [hyperlane.cookiescan.io](https://hyperlane.cookiescan.io).
+- Ask in the [Cookie Chain Telegram](https://t.me/TheCookieNetChain) — hackathon organizers are
+  typically happy to help participants get a small amount for testing.
 
 ```bash
 npm run build      # production build → dist/
@@ -117,6 +125,11 @@ insert (seeded deterministically from that post's transaction signature).
 
 ## Known limitations / next steps
 
+- **Wallet "sign and send" shortcuts**: `useCrackCookie` deliberately calls `signTransaction` and then
+  broadcasts via Cookie Chain's own RPC (`connection.sendRawTransaction`) instead of the wallet
+  adapter's combined `sendTransaction`. Several wallets' combined shortcut quietly routes the broadcast
+  through their own hosted relay, which doesn't recognize less-common networks like Cookie Chain and
+  fails with a 401. Signing only and sending ourselves avoids that.
 - **Naming**: Cookie Chain already has an official, community-multisig-controlled
   ["Cookie Jar"](https://docs.cookiechain.wtf/cookie-jar) treasury vault. CookieFortune deliberately
   avoids that name and avoids any pooled address of its own — sprinkles are always direct wallet-to-wallet

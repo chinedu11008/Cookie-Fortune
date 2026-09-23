@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useCrackCookie, CRACK_STATUS } from '../hooks/useCrackCookie'
-import { MAX_FORTUNE_LENGTH, NATIVE_SYMBOL } from '../lib/constants'
+import { useWalletBalance } from '../hooks/useWalletBalance'
+import { BRIDGE_URL, MAX_FORTUNE_LENGTH, NATIVE_SYMBOL, TELEGRAM_URL } from '../lib/constants'
 import { shortenAddress } from '../lib/format'
 
 const DEFAULT_SPRINKLE = '0.01'
@@ -17,6 +18,7 @@ const STATUS_LABEL = {
 export default function CrackCookie({ replyTarget, onClearReply, onPosted }) {
   const { connected } = useWallet()
   const { status, error, explorerUrl, crackCookie, reset } = useCrackCookie()
+  const { lamports: balanceLamports, refresh: refreshBalance } = useWalletBalance()
   const [message, setMessage] = useState('')
   const [sprinkleEnabled, setSprinkleEnabled] = useState(true)
   const [sprinkleAmount, setSprinkleAmount] = useState(DEFAULT_SPRINKLE)
@@ -24,6 +26,7 @@ export default function CrackCookie({ replyTarget, onClearReply, onPosted }) {
   const isReplying = Boolean(replyTarget)
   const busy = BUSY_STATUSES.includes(status)
   const remaining = MAX_FORTUNE_LENGTH - message.length
+  const needsFunding = connected && balanceLamports === 0
 
   useEffect(() => {
     if (isReplying) setSprinkleEnabled(true)
@@ -49,12 +52,28 @@ export default function CrackCookie({ replyTarget, onClearReply, onPosted }) {
       setMessage('')
       onPosted?.()
       onClearReply?.()
+      refreshBalance()
     }
   }
 
   return (
     <form className="composer" onSubmit={handleSubmit}>
       <div className="composer__slip">
+        {needsFunding && (
+          <p className="composer__funding-warning">
+            This wallet has no {NATIVE_SYMBOL} on Cookie Chain yet, so it can't cover the network
+            fee.{' '}
+            <a href={BRIDGE_URL} target="_blank" rel="noreferrer">
+              Bridge some over
+            </a>{' '}
+            or ask in the{' '}
+            <a href={TELEGRAM_URL} target="_blank" rel="noreferrer">
+              Cookie Chain Telegram
+            </a>
+            .
+          </p>
+        )}
+
         {isReplying && (
           <div className="composer__reply-chip">
             <span>
