@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import ModeToggle from './ModeToggle'
+import { getDemoIdentity } from '../lib/demoData'
+import { shortenAddress } from '../lib/format'
 
-export default function Header() {
+function DemoWalletBadge() {
+  const [address] = useState(() => getDemoIdentity())
+  return (
+    <span className="demo-wallet-badge" title="A fake identity used only in demo mode">
+      🎭 {shortenAddress(address)}
+    </span>
+  )
+}
+
+export default function Header({ mode, onModeChange }) {
   return (
     <header className="site-header">
       <div className="site-header__brand">
@@ -22,7 +34,8 @@ export default function Header() {
         >
           Built on Cookie Chain
         </a>
-        <WalletMultiButton />
+        <ModeToggle mode={mode} onChange={onModeChange} />
+        {mode === 'demo' ? <DemoWalletBadge /> : <WalletMultiButton />}
       </div>
     </header>
   )

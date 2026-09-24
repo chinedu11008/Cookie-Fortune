@@ -11,10 +11,17 @@ There is **no backend and no database** — the chain *is* the data store. There
 app-owned wallet**: every transaction is signed and paid for by the visitor's own connected wallet, and
 the optional "sprinkle" tip goes directly, peer-to-peer, from one wallet to another.
 
+A **Live / Demo** toggle sits in the top navbar. Live is the real thing described above. Demo needs no
+wallet and no COOK — it simulates the same flow end to end (with a seeded wall to browse) and saves
+anything you post only to your own browser's local storage, clearly labeled throughout so it's never
+mistaken for real on-chain activity. Good for a first look, a walkthrough video, or letting someone try
+the app before they've bridged any COOK.
+
 ## Table of contents
 
 - [How it satisfies the cApp requirements](#how-it-satisfies-the-capp-requirements)
 - [How it works](#how-it-works)
+- [Demo mode](#demo-mode)
 - [Setup](#setup)
 - [Deploying](#deploying)
 - [Project structure](#project-structure)
@@ -56,6 +63,23 @@ Cookie Chain embeds the standard Solana programs (Memo, SPL Token, Token-2022, M
 Jupiter, and more) at genesis at their canonical addresses, so this app needs **no custom on-chain
 program and no deployment** — see the live list at
 [docs.cookiechain.wtf/ecosystem](https://docs.cookiechain.wtf/ecosystem).
+
+## Demo mode
+
+The toggle in the header switches the whole app between two independent data sources — nothing is
+shared between them:
+
+- **Live** — everything described above: real wallet, real transactions, real Cookie Chain data.
+- **Demo** — a fake-but-valid-shaped wallet address generated once per browser
+  (`src/lib/demoData.js`), a seeded set of example fortunes, and a simulated build → approve → confirm
+  timeline with the same pacing as the real one. Posting in demo mode calls no RPC and needs no
+  extension — it just writes to `localStorage`. Every place a real transaction or address would normally
+  link out to Cookiescan instead shows a plain "Simulated" label, so demo content can never be mistaken
+  for something that actually happened on-chain. A "Reset demo data" button in the banner clears anything
+  you've posted and goes back to the seed set.
+
+This is purely a UX affordance for trying the app or recording a walkthrough without needing COOK in
+hand — it isn't a testnet and doesn't touch Cookie Chain at all. The actual submission is Live mode.
 
 ## Setup
 
@@ -99,15 +123,21 @@ src/
   lib/
     constants.js   Cookie Chain endpoints, genesis program IDs, app config
     memo.js         Encodes/decodes fortunes, builds the crack-cookie transaction
-    feed.js         Reads and decodes the wall from chain history
+    feed.js         Reads and decodes the live wall from chain history
+    demoData.js     Seeded fortunes + localStorage-backed data for Demo mode
     format.js       Address shortening, COOK formatting, relative time, lucky numbers
   context/
     WalletContextProvider.jsx   Connection + wallet-adapter setup (Nightly included)
   hooks/
-    useCrackCookie.js   Transaction build → sign → send → confirm state machine
-    useWallFeed.js      Loads, paginates, and lightly polls the wall
+    useCrackCookie.js       Live transaction build → sign → send → confirm state machine
+    useDemoCrackCookie.js   Same state machine shape, simulated, for Demo mode
+    useWallFeed.js          Loads, paginates, and lightly polls the live wall
+    useDemoWall.js          Same shape as useWallFeed, backed by demoData.js
+    useWalletBalance.js     Tracks the connected wallet's COOK balance (Live only)
+    useAppMode.js           The Live/Demo toggle, persisted per browser
   components/
-    Header.jsx, CrackCookie.jsx, Wall.jsx, FortuneCard.jsx, Leaderboard.jsx, StatsBar.jsx
+    Header.jsx, ModeToggle.jsx, CrackCookie.jsx, Wall.jsx, FortuneCard.jsx,
+    Leaderboard.jsx, StatsBar.jsx
 ```
 
 ## Configuration

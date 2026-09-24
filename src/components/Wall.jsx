@@ -7,12 +7,16 @@ function tiltFor(signature) {
   return (hash % 60) / 10 - 3 // -3deg .. 3deg
 }
 
-export default function Wall({ fortunes, loading, loadingMore, hasMore, error, onLoadMore, onReply }) {
+export default function Wall({ fortunes, loading, loadingMore, hasMore, error, onLoadMore, onReply, mode }) {
   return (
     <section className="wall">
       <div className="wall__heading">
         <h2>The wall</h2>
-        <p>Every fortune here is a real, signed transaction on Cookie Chain.</p>
+        <p>
+          {mode === 'demo'
+            ? 'Simulated fortunes, stored only on this device.'
+            : 'Every fortune here is a real, signed transaction on Cookie Chain.'}
+        </p>
       </div>
 
       {error && <p className="wall__error">{error}</p>}

@@ -3,7 +3,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { formatCook } from '../lib/format'
 import { NATIVE_SYMBOL } from '../lib/constants'
 
-export default function StatsBar({ stats, loading }) {
+export default function StatsBar({ stats, loading, mode }) {
   const items = [
     { label: 'Fortunes cracked', value: loading ? '—' : stats.totalFortunes },
     { label: 'Unique bakers', value: loading ? '—' : stats.uniqueBakers },
@@ -21,7 +21,11 @@ export default function StatsBar({ stats, loading }) {
           <span className="stats__label">{item.label}</span>
         </div>
       ))}
-      <p className="stats__note">Counted from the fortunes currently loaded on this page.</p>
+      <p className="stats__note">
+        {mode === 'demo'
+          ? 'Simulated data, stored only on this device.'
+          : 'Counted from the fortunes currently loaded on this page.'}
+      </p>
     </section>
   )
 }
